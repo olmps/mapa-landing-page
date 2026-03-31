@@ -57,17 +57,33 @@ export function Pricing({ vagasRestantes = VAGAS_TOTAL }: PricingProps) {
                     Vagas esgotadas para esta turma
                   </span>
                 </div>
+              ) : vagasRestantes <= 5 ? (
+                <div className="inline-flex items-center gap-2 rounded-full border border-[rgba(0,85,255,0.2)] bg-[rgba(0,85,255,0.05)] px-3 py-1.5 mb-6">
+                  <span className="w-2 h-2 rounded-full bg-[#0055FF]" />
+                  <span className="text-[#EEEEF0] text-sm font-medium">
+                    Restam apenas{" "}
+                    <span
+                      className="font-semibold"
+                      style={{ fontFamily: "var(--font-fira-code)" }}
+                    >
+                      {vagasRestantes}
+                    </span>{" "}
+                    vagas 🔥
+                  </span>
+                </div>
               ) : (
                 <div className="inline-flex items-center gap-2 rounded-full border border-[rgba(0,85,255,0.2)] bg-[rgba(0,85,255,0.05)] px-3 py-1.5 mb-6">
                   <span className="w-2 h-2 rounded-full bg-[#0055FF]" />
                   <span className="text-sm font-medium">
-                    <span
-                      className="text-[#EEEEF0] font-semibold"
-                      style={{ fontFamily: "var(--font-fira-code)" }}
-                    >
-                      {vagasRestantes}/{VAGAS_TOTAL}
+                    <span className="text-[#EEEEF0]">Apenas{" "}
+                      <span
+                        className="font-semibold"
+                        style={{ fontFamily: "var(--font-fira-code)" }}
+                      >
+                        {VAGAS_TOTAL}
+                      </span>
                     </span>{" "}
-                    <span className="text-[#888898]">vagas para a primeira turma</span>
+                    <span className="text-[#888898]">vagas por turma</span>
                   </span>
                 </div>
               )}

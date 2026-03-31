@@ -52,15 +52,27 @@ export function FinalCTA({ vagasRestantes = VAGAS_TOTAL }: FinalCTAProps) {
         <p className="reveal mt-6 text-mapa-text-hint text-sm">
           {esgotado ? (
             <>Vagas esgotadas — entre na lista para a próxima turma.</>
+          ) : vagasRestantes <= 5 ? (
+            <>
+              Restam apenas{" "}
+              <span
+                className="font-semibold text-[#EEEEF0]"
+                style={{ fontFamily: "var(--font-fira-code)" }}
+              >
+                {vagasRestantes}
+              </span>{" "}
+              vagas 🔥 · Mentoria individual · 100% humano · Garantia de 7 dias.
+            </>
           ) : (
             <>
+              Apenas{" "}
               <span
                 className="font-semibold text-[#888898]"
                 style={{ fontFamily: "var(--font-fira-code)" }}
               >
-                {vagasRestantes}/{VAGAS_TOTAL}
+                {VAGAS_TOTAL}
               </span>{" "}
-              vagas restantes · Mentoria individual · 100% humano · Garantia de 7 dias.
+              vagas por turma · Mentoria individual · 100% humano · Garantia de 7 dias.
             </>
           )}
         </p>
