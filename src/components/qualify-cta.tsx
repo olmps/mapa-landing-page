@@ -36,8 +36,14 @@ export function QualifyCTA() {
             />
 
             <div className="gentle-float relative z-10 flex flex-col items-center text-center px-8 py-16 lg:py-20">
+              <p
+                className="reveal mapa-small text-mapa-accent/70 mb-4"
+              >
+                100% gratuito, sem compromisso
+              </p>
+
               <h2 className="reveal mapa-h2 text-mapa-text max-w-[700px]">
-                Quer saber se seu processo pode ser{" "}
+                Não tem certeza se seu fluxo pode ser{" "}
                 <span className="text-accent-blue">automatizado</span>?
               </h2>
 
@@ -45,8 +51,8 @@ export function QualifyCTA() {
                 className="reveal mt-6 max-w-[520px] text-mapa-text-secondary leading-relaxed"
                 style={{ animationDelay: "100ms" }}
               >
-                Mande uma mensagem no WhatsApp. Sem compromisso, sem chatbot — um
-                humano vai te responder.
+                Mande uma mensagem para nossa equipe e te ajudamos a descobrir.
+                Sem chatbot, sem formulário — um humano vai te responder.
               </p>
 
               <a
@@ -60,7 +66,7 @@ export function QualifyCTA() {
                 style={{ animationDelay: "200ms" }}
               >
                 <WhatsAppIcon className="w-5 h-5" />
-                Falar no WhatsApp
+                Converse com a equipe
               </a>
 
               <p

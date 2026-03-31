@@ -82,13 +82,13 @@ export function Hero() {
             Falar no WhatsApp
           </a>
           <a
-            href="#pricing"
+            href="/checkout"
             className={cn(
               buttonVariants({ variant: "outline", size: "lg" }),
               "rounded-full border-mapa-border hover:border-mapa-border-hover bg-transparent text-mapa-text-secondary hover:text-mapa-text font-medium px-8 h-12 text-base transition-all duration-300 no-underline"
             )}
           >
-            Comprar agora — R$987
+            12x de R$166,42
           </a>
         </div>
 

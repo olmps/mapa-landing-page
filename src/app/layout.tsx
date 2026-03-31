@@ -26,7 +26,7 @@ const firaCode = Fira_Code({
 export const metadata: Metadata = {
   title: "Método MAPA — Mentoria individual para automatizar processos digitais com IA",
   description:
-    "Mentoria assíncrona via WhatsApp. Time especializado te guia passo a passo para automatizar 1 processo digital. R$987, sem prazo.",
+    "Mentoria assíncrona via WhatsApp. Time especializado te guia passo a passo para automatizar 1 processo digital. 12x de R$166,42, sem prazo.",
 };
 
 export default function RootLayout({

@@ -5,9 +5,15 @@ import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { WHATSAPP_URL } from "@/lib/constants";
 import { WhatsAppIcon } from "@/components/icons/whatsapp";
+import { VAGAS_TOTAL } from "@/lib/edge-config";
 
-export function FinalCTA() {
+interface FinalCTAProps {
+  vagasRestantes?: number;
+}
+
+export function FinalCTA({ vagasRestantes = VAGAS_TOTAL }: FinalCTAProps) {
   const ref = useScrollReveal();
+  const esgotado = vagasRestantes === 0;
 
   return (
     <section className="mapa-section gradient-final-cta relative overflow-hidden" ref={ref}>
@@ -29,20 +35,34 @@ export function FinalCTA() {
             )}
           >
             <WhatsAppIcon className="w-4 h-4" />
-            Falar no WhatsApp
+            {esgotado ? "Entrar na lista de espera" : "Falar no WhatsApp"}
           </a>
-          <a
-            href="#pricing"
-            className={cn(
-              buttonVariants({ variant: "outline", size: "lg" }),
-              "rounded-full border-mapa-border hover:border-mapa-border-hover bg-transparent text-mapa-text-secondary hover:text-mapa-text font-medium px-10 h-14 text-lg transition-all duration-300 no-underline"
-            )}
-          >
-            Comprar agora — R$987
-          </a>
+          {!esgotado && (
+            <a
+              href="/checkout"
+              className={cn(
+                buttonVariants({ variant: "outline", size: "lg" }),
+                "rounded-full border-mapa-border hover:border-mapa-border-hover bg-transparent text-mapa-text-secondary hover:text-mapa-text font-medium px-10 h-14 text-lg transition-all duration-300 no-underline"
+              )}
+            >
+              12x de R$166,42
+            </a>
+          )}
         </div>
         <p className="reveal mt-6 text-mapa-text-hint text-sm">
-          Mentoria individual. 100% humano. Garantia de 7 dias.
+          {esgotado ? (
+            <>Vagas esgotadas — entre na lista para a próxima turma.</>
+          ) : (
+            <>
+              <span
+                className="font-semibold text-[#888898]"
+                style={{ fontFamily: "var(--font-fira-code)" }}
+              >
+                {vagasRestantes}/{VAGAS_TOTAL}
+              </span>{" "}
+              vagas restantes · Mentoria individual · 100% humano · Garantia de 7 dias.
+            </>
+          )}
         </p>
       </div>
     </section>
