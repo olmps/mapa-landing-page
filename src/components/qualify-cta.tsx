@@ -3,7 +3,7 @@
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
-import { WHATSAPP_URL, WHATSAPP_NUMBER } from "@/lib/constants";
+import { WHATSAPP_URL } from "@/lib/constants";
 import { WhatsAppIcon } from "@/components/icons/whatsapp";
 
 export function QualifyCTA() {
@@ -69,12 +69,6 @@ export function QualifyCTA() {
                 Converse com a equipe
               </a>
 
-              <p
-                className="reveal mt-4 text-mapa-text-hint text-sm font-mono"
-                style={{ animationDelay: "300ms" }}
-              >
-                {WHATSAPP_NUMBER}
-              </p>
             </div>
           </div>
         </div>

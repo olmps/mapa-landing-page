@@ -1,10 +1,9 @@
-export const WHATSAPP_NUMBER = "+55 51 99369-7719";
 export const WHATSAPP_URL =
-  "https://wa.me/5551993697719?text=Oi%21%20Quero%20saber%20mais%20sobre%20a%20mentoria%20MAPA.";
+  "https://wa.me/12058800598?text=Oi%21%20Quero%20saber%20mais%20sobre%20a%20mentoria%20MAPA.";
 export const PAYMENT_URL = "/checkout";
 export const PRODUCT_NAME = "Mentoria MAPA";
 export const PRODUCT_PRICE = 1997;
 export const PIX_DISCOUNT = 0.05; // 5% off
 export const PIX_PRICE = Math.round(PRODUCT_PRICE * (1 - PIX_DISCOUNT) * 100) / 100; // R$1897,15
 export const WHATSAPP_PURCHASE_URL =
-  "https://wa.me/5551993697719?text=Oi%21%20Acabei%20de%20comprar%20a%20mentoria%20MAPA.";
+  "https://wa.me/12058800598?text=Oi%21%20Acabei%20de%20comprar%20a%20mentoria%20MAPA.";

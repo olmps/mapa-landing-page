@@ -93,11 +93,7 @@ export function SuccessContent({
                   1
                 </span>
                 <span>
-                  Salve o número{" "}
-                  <span className="text-[#EEEEF0] font-medium">
-                    +55 51 99369-7719
-                  </span>{" "}
-                  nos seus contatos
+                  Clique no botão abaixo para abrir o WhatsApp da mentoria
                 </span>
               </li>
               <li className="flex gap-3">
