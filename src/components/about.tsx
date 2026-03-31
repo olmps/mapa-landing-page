@@ -4,7 +4,7 @@ import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 
 const stats = [
   { value: "7+", label: "Produtos enviados" },
-  { value: "300k+", label: "Usuários impactados" },
+  { value: "+1M", label: "Usuários impactados" },
   { value: "3", label: "Semanas para MVP" },
   { value: "5+", label: "Anos de experiência" },
 ];
@@ -91,7 +91,7 @@ export function About() {
             Somos a{" "}
             <strong className="text-mapa-text font-semibold">Olympus</strong> —
             um estúdio boutique de design e desenvolvimento de software. Nossos
-            produtos já impactaram mais de 300 mil usuários.
+            produtos já impactaram mais de 1 milhão de usuários.
           </p>
         </div>
 

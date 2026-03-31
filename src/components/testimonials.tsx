@@ -1,7 +1,8 @@
 "use client";
 
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
-import { ExternalLink, Quote } from "lucide-react";
+import { ExternalLink, Quote, ChevronLeft, ChevronRight } from "lucide-react";
+import { useRef } from "react";
 
 interface Testimonial {
   quote: string;
@@ -88,6 +89,16 @@ const testimonials: Testimonial[] = [
 
 export function Testimonials() {
   const ref = useScrollReveal();
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  function scrollBy(direction: "left" | "right") {
+    if (!scrollRef.current) return;
+    const amount = 340;
+    scrollRef.current.scrollBy({
+      left: direction === "right" ? amount : -amount,
+      behavior: "smooth",
+    });
+  }
 
   return (
     <section className="mapa-section relative overflow-hidden" ref={ref}>
@@ -95,18 +106,21 @@ export function Testimonials() {
         {/* Header */}
         <div className="text-center mb-12">
           <p className="reveal text-mapa-accent text-xs font-mono uppercase tracking-[0.2em] mb-4">
-            DEPOIMENTOS REAIS
+            COMUNIDADE BRASILEIRA
           </p>
           <h2 className="reveal mapa-h2 text-mapa-text">
-            O que estão dizendo
+            Quem já automatizou — e o que ganhou
           </h2>
+          <p className="reveal mt-4 text-mapa-text-secondary max-w-lg mx-auto">
+            Relatos publicados por profissionais brasileiros em TabNews, LinkedIn e DEV.to. Resultados reais, com fonte.
+          </p>
         </div>
 
         {/* Horizontal scroll container */}
         <div className="relative reveal">
           {/* Left fade */}
           <div
-            className="absolute left-0 top-0 bottom-0 w-8 z-10 pointer-events-none"
+            className="absolute left-0 top-0 bottom-[16px] w-8 z-10 pointer-events-none"
             style={{
               background:
                 "linear-gradient(to right, var(--color-mapa-bg), transparent)",
@@ -116,7 +130,7 @@ export function Testimonials() {
 
           {/* Right fade */}
           <div
-            className="absolute right-0 top-0 bottom-0 w-8 z-10 pointer-events-none"
+            className="absolute right-0 top-0 bottom-[16px] w-8 z-10 pointer-events-none"
             style={{
               background:
                 "linear-gradient(to left, var(--color-mapa-bg), transparent)",
@@ -126,6 +140,7 @@ export function Testimonials() {
 
           {/* Scrollable cards */}
           <div
+            ref={scrollRef}
             className="horizontal-scroll flex gap-5 overflow-x-auto pb-4 px-1"
             style={{
               scrollSnapType: "x mandatory",
@@ -171,6 +186,24 @@ export function Testimonials() {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Navigation buttons — desktop only */}
+          <div className="hidden md:flex items-center justify-center gap-3 mt-6">
+            <button
+              onClick={() => scrollBy("left")}
+              aria-label="Anterior"
+              className="flex items-center justify-center w-9 h-9 rounded-full border border-mapa-border bg-mapa-surface1 text-mapa-text-secondary hover:text-mapa-text hover:border-mapa-border-hover transition-colors duration-200"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => scrollBy("right")}
+              aria-label="Próximo"
+              className="flex items-center justify-center w-9 h-9 rounded-full border border-mapa-border bg-mapa-surface1 text-mapa-text-secondary hover:text-mapa-text hover:border-mapa-border-hover transition-colors duration-200"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
           </div>
         </div>
       </div>

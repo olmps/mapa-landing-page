@@ -7,6 +7,7 @@ interface VagasCounterProps {
 export async function VagasCounter({ variant = "pricing" }: VagasCounterProps) {
   const vagas = await getVagasRestantes();
   const esgotado = vagas === 0;
+  const poucasVagas = vagas > 0 && vagas <= 5;
 
   if (variant === "final-cta") {
     if (esgotado) {
@@ -17,15 +18,30 @@ export async function VagasCounter({ variant = "pricing" }: VagasCounterProps) {
         </p>
       );
     }
+    if (poucasVagas) {
+      return (
+        <p className="text-[#888898] text-sm">
+          Restam apenas{" "}
+          <span
+            className="font-mono text-[#0055FF] font-semibold"
+            style={{ fontFamily: "var(--font-fira-code)" }}
+          >
+            {vagas}
+          </span>{" "}
+          vagas 🔥
+        </p>
+      );
+    }
     return (
       <p className="text-[#888898] text-sm">
+        Apenas{" "}
         <span
           className="font-mono text-[#0055FF] font-semibold"
           style={{ fontFamily: "var(--font-fira-code)" }}
         >
-          {vagas}/{VAGAS_TOTAL}
+          {VAGAS_TOTAL}
         </span>{" "}
-        vagas restantes para a primeira turma
+        vagas por turma
       </p>
     );
   }
@@ -42,17 +58,36 @@ export async function VagasCounter({ variant = "pricing" }: VagasCounterProps) {
     );
   }
 
+  if (poucasVagas) {
+    return (
+      <div className="inline-flex items-center gap-2 rounded-full border border-[rgba(0,85,255,0.2)] bg-[rgba(0,85,255,0.05)] px-3 py-1.5 mb-6">
+        <span className="w-2 h-2 rounded-full bg-[#0055FF]" />
+        <span className="text-[#EEEEF0] text-sm font-medium">
+          Restam apenas{" "}
+          <span
+            className="font-semibold"
+            style={{ fontFamily: "var(--font-fira-code)" }}
+          >
+            {vagas}
+          </span>{" "}
+          vagas 🔥
+        </span>
+      </div>
+    );
+  }
+
   return (
     <div className="inline-flex items-center gap-2 rounded-full border border-[rgba(0,85,255,0.2)] bg-[rgba(0,85,255,0.05)] px-3 py-1.5 mb-6">
       <span className="w-2 h-2 rounded-full bg-[#0055FF]" />
       <span className="text-[#EEEEF0] text-sm font-medium">
+        Apenas{" "}
         <span
           className="font-semibold"
           style={{ fontFamily: "var(--font-fira-code)" }}
         >
-          {vagas}/{VAGAS_TOTAL}
+          {VAGAS_TOTAL}
         </span>{" "}
-        <span className="text-[#888898]">vagas para a primeira turma</span>
+        <span className="text-[#888898]">vagas por turma</span>
       </span>
     </div>
   );

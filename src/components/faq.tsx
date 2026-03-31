@@ -39,6 +39,11 @@ const items = [
     answer:
       "Sim, 7 dias de garantia incondicional. Se você não gostar por qualquer motivo, devolvemos 100% do seu investimento.",
   },
+  {
+    question: "Quando abre mais vagas?",
+    answer:
+      "Não sabemos. Vamos focar 100% na turma que entrar agora.",
+  },
 ];
 
 export function FAQ() {
