@@ -11,7 +11,6 @@ import { SocialProof } from "@/components/social-proof";
 import { Testimonials } from "@/components/testimonials";
 import { QualifyCTA } from "@/components/qualify-cta";
 import { Qualify } from "@/components/qualify";
-import { ValueStack } from "@/components/value-stack";
 import { Pricing } from "@/components/pricing";
 import { Guarantee } from "@/components/guarantee";
 import { FAQ } from "@/components/faq";
@@ -45,7 +44,6 @@ export default async function Home() {
         <Testimonials />
         <QualifyCTA />
         <Qualify />
-        <ValueStack />
         <Pricing vagasRestantes={vagasRestantes} />
         <Guarantee />
         <FAQ />
