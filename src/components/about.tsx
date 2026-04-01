@@ -18,18 +18,18 @@ const team = [
     photo: "/team/vinicius-blembeel.jpg",
   },
   {
-    name: "Joao Araujo",
-    nickname: "The Fast Learner Dev",
-    bio: "Full Stack Developer que trocou Administração por código há 2 anos. Aprende rápido e entrega mais rápido ainda.",
-    likes: ["Esportes", "Café"],
-    photo: "/team/joao-araujo.jpg",
-  },
-  {
     name: "Lucas Bianco",
     nickname: "The Diligent Coder",
     bio: "Senior Dev vindo da Engenharia Mecânica. Arquiteta sistemas que escalam sem quebrar.",
     likes: ["Esportes", "Jogar e criar games"],
     photo: "/team/lucas-bianco.jpg",
+  },
+  {
+    name: "Joao Araujo",
+    nickname: "The Fast Learner Dev",
+    bio: "Full Stack Developer que trocou Administração por código há 2 anos. Aprende rápido e entrega mais rápido ainda.",
+    likes: ["Esportes", "Café"],
+    photo: "/team/joao-araujo.jpg",
   },
 ];
 
