@@ -123,32 +123,7 @@ export function SocialProof() {
           </p>
         </div>
 
-        {/* Case Olympus */}
-        <div className="reveal max-w-3xl mx-auto mt-10 mb-4 rounded-2xl border border-mapa-accent/15 bg-mapa-accent/4 px-7 py-6">
-          <p className="text-mapa-text-secondary text-[14px] leading-relaxed mb-5">
-            <span className="text-mapa-text font-medium">Nós usamos isso todo dia.</span>{" "}
-            A Olympus — nossa empresa — roda com as mesmas automações que ensinamos na mentoria.
-          </p>
-          <div className="flex flex-wrap gap-3">
-            {[
-              "4 agentes especializados rodando 24/7",
-              "Newsletter gerada em 15 min (antes eram 4h)",
-              "100% do pipeline de vendas automatizado",
-            ].map((metric, i) => (
-              <div
-                key={i}
-                className="inline-flex items-center gap-2 rounded-full border border-mapa-accent/20 bg-mapa-accent/8 px-3.5 py-1.5"
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-mapa-accent shrink-0" />
-                <span className="text-mapa-text text-[13px] font-medium">{metric}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <p className="reveal text-center text-mapa-text-hint text-[13px] mb-10 max-w-lg mx-auto">
-          Processos como estes já foram automatizados por profissionais brasileiros — e são exatamente os tipos de automação que construímos na mentoria.
-        </p>
+        <div className="mt-10 mb-10" />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {examples.map((example, i) => {
