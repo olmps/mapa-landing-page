@@ -127,7 +127,7 @@ export function Pricing({ vagasRestantes = VAGAS_TOTAL }: PricingProps) {
                       <Check className="w-4 h-4 mt-0.5 shrink-0 text-mapa-accent" />
                       <div className="flex flex-col gap-0.5">
                         <span className="text-[15px] text-mapa-text font-medium leading-snug">
-                          Sessão de consultoria individual de 1h com o Jonata
+                          Consultoria de 1h com o founder da Olympus
                         </span>
                         <span className="inline-flex items-center w-fit rounded-full border border-mapa-accent/20 bg-mapa-accent/8 px-2 py-0.5 text-[11px] text-mapa-accent font-medium tracking-wide mt-1">
                           Diferencial exclusivo
