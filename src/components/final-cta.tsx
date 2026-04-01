@@ -26,28 +26,26 @@ export function FinalCTA({ vagasRestantes = VAGAS_TOTAL }: FinalCTAProps) {
         </h2>
         <div className="reveal mt-10 flex flex-col sm:flex-row gap-4 justify-center">
           <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#investimento"
             className={cn(
               buttonVariants({ size: "lg" }),
               "rounded-full bg-mapa-accent hover:bg-mapa-accent-md text-white font-medium px-10 h-14 text-lg transition-colors duration-300 no-underline"
             )}
           >
-            <WhatsAppIcon className="w-4 h-4" />
-            {esgotado ? "Entrar na lista de espera" : "Falar no WhatsApp"}
+            {esgotado ? "Entrar na lista de espera" : "Automatizar meu processo"}
           </a>
-          {!esgotado && (
-            <a
-              href="/checkout"
-              className={cn(
-                buttonVariants({ variant: "outline", size: "lg" }),
-                "rounded-full border-mapa-border hover:border-mapa-border-hover bg-transparent text-mapa-text-secondary hover:text-mapa-text font-medium px-10 h-14 text-lg transition-all duration-300 no-underline"
-              )}
-            >
-              12x de R$166,42
-            </a>
-          )}
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(
+              buttonVariants({ variant: "outline", size: "lg" }),
+              "rounded-full border-green-500/30 hover:border-green-500/50 bg-transparent text-green-400 hover:text-green-300 font-medium px-10 h-14 text-lg transition-all duration-300 no-underline"
+            )}
+          >
+            <WhatsAppIcon className="w-4 h-4" />
+            Falar no WhatsApp
+          </a>
         </div>
         <p className="reveal mt-6 text-mapa-text-hint text-sm">
           {esgotado ? (

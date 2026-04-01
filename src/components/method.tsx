@@ -69,7 +69,7 @@ export function Method() {
                   <step.icon className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="mapa-small text-mapa-text-hint">
+                  <span className="mapa-small text-[#707080]">
                     Etapa {i + 1}
                   </span>
                   <h3 className="mapa-h3 text-mapa-text flex items-center gap-2">
@@ -80,7 +80,7 @@ export function Method() {
                   </h3>
                 </div>
               </div>
-              <p className="text-mapa-text-secondary text-[15px] leading-relaxed">
+              <p className="text-[#b0b0bc] text-[15px] leading-relaxed">
                 {step.description}
               </p>
             </div>

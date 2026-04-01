@@ -115,10 +115,10 @@ export function WhatItIs() {
             <MessageCircle className="w-4 h-4 text-mapa-accent" />
             <span>Resposta em até 24h úteis</span>
           </div>
-          <div className="flex items-center gap-2 rounded-full border border-green-500/20 bg-mapa-surface2 px-4 py-1.5 text-sm font-medium text-green-400">
+          <div className="flex items-center gap-2 rounded-full border border-mapa-accent/20 bg-mapa-surface2 px-4 py-1.5 text-sm font-medium text-mapa-accent">
             <span className="pulse-dot relative flex h-2.5 w-2.5">
-              <span className="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-40" />
-              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-green-400" />
+              <span className="absolute inline-flex h-full w-full rounded-full bg-mapa-accent opacity-40" />
+              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-mapa-accent" />
             </span>
             <span>100% humano respondendo</span>
           </div>

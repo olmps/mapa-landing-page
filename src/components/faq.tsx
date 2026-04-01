@@ -37,12 +37,37 @@ const items = [
   {
     question: "Tem garantia?",
     answer:
-      "Sim, 7 dias de garantia incondicional. Se você não gostar por qualquer motivo, devolvemos 100% do seu investimento.",
+      "Sim, 7 dias de garantia incondicional. Se nos primeiros 7 dias você perceber que a mentoria não é para você — por qualquer motivo — devolvemos 100% do investimento. Sem burocracia, sem perguntas, sem formulário. Basta mandar uma mensagem no WhatsApp.",
+  },
+  {
+    question: "R$1.997 é caro?",
+    answer:
+      "R$1.997 parece muito até você calcular quanto custa continuar no manual. Se você gasta 2h por dia em tarefas repetitivas, são 40h por mês. A R$50 a hora, são R$2.000 por mês jogados fora. A mentoria se paga no primeiro mês — e o conhecimento fica para sempre.",
+  },
+  {
+    question: "Posso aprender sozinho com YouTube e cursos?",
+    answer:
+      "Pode. Mas quantas horas você vai gastar testando a ferramenta errada, seguindo tutorial desatualizado e travando na integração? A mentoria é o atalho: você diz o que precisa, a gente te guia direto para a solução. Sem tentativa e erro.",
+  },
+  {
+    question: "Preciso pensar mais.",
+    answer:
+      "Claro. Mas lembre: cada semana que passa sem automatizar são horas que você não recupera. E com 7 dias de garantia incondicional, você pode começar agora e decidir depois — sem risco nenhum.",
   },
   {
     question: "Quando abre mais vagas?",
     answer:
       "Não sabemos. Vamos focar 100% na turma que entrar agora.",
+  },
+  {
+    question: "Já tentei automatizar e não deu certo.",
+    answer:
+      "Provavelmente porque tentou sozinho, sem método. A mentoria existe exatamente para isso: alguém que já fez dezenas de automações te guiando passo a passo, no seu contexto específico, até funcionar. Não é curso gravado — é acompanhamento real.",
+  },
+  {
+    question: "Não sou técnico, consigo acompanhar?",
+    answer:
+      "Sim. Mais de 70% das ferramentas que usamos não exigem código. E quando exigem, te mostramos exatamente o que fazer, linha por linha. A metodologia MAPA foi desenhada para funcionar independente do seu nível técnico.",
   },
 ];
 

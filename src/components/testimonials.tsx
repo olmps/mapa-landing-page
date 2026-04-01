@@ -10,10 +10,12 @@ interface Testimonial {
   handle: string;
   sourceUrl: string;
   sourceLabel: string;
+  resultBadge: string;
 }
 
 const testimonials: Testimonial[] = [
   {
+    resultBadge: "60h/mês economizadas",
     quote:
       "Construí um sistema de 17 skills de IA que assumiram toda a geração de relatórios financeiros. Economizamos ~60 horas-pessoa por mês — relatórios diários caíram de 2-3h para 5-10 minutos.",
     author: "Georgii Motrenko",
@@ -23,6 +25,7 @@ const testimonials: Testimonial[] = [
     sourceLabel: "TabNews",
   },
   {
+    resultBadge: "+20h recuperadas em 1h de trabalho",
     quote:
       "Gastei menos de uma hora para fazer o script e economizei +20 horas de trabalho árduo. Automatizei a documentação de 300+ arquivos de código.",
     author: "jeffz",
@@ -32,6 +35,7 @@ const testimonials: Testimonial[] = [
     sourceLabel: "TabNews",
   },
   {
+    resultBadge: "+R$600/mês economizados",
     quote:
       "Substituí o Zapier, Kommo e Calendly por um stack N8N auto-hospedado. O cliente agora roda seu funil de vendas 100% automático e economiza +R$600/mês.",
     author: "Pedro H. G. Mello",
@@ -41,6 +45,7 @@ const testimonials: Testimonial[] = [
     sourceLabel: "DEV.to",
   },
   {
+    resultBadge: "Resposta ao cliente em 5 segundos",
     quote:
       "Implantei um sistema de agentes de IA que responde dúvidas de clientes em até 5 segundos. A automação mudou completamente nosso atendimento.",
     author: "Vinicius Dourado",
@@ -50,6 +55,7 @@ const testimonials: Testimonial[] = [
     sourceLabel: "LinkedIn",
   },
   {
+    resultBadge: "R$5.000/mês de custo eliminado",
     quote:
       "Automatizei o envio de leads via WhatsApp — passei de 100 para 300+ mensagens por dia, eliminei R$5 mil/mês de custo operacional e zero bloqueios de conta.",
     author: "Marcos P. Santana",
@@ -59,6 +65,7 @@ const testimonials: Testimonial[] = [
     sourceLabel: "LinkedIn",
   },
   {
+    resultBadge: "Coleta de pedidos 100% automática",
     quote:
       "O agente de IA conversa com o cliente, coleta nome e e-mail, entende o pedido e manda um resumo completo pro Trello. Ideal pra quem quer parar de anotar tudo na mão.",
     author: "Tarcísio Lopes",
@@ -68,6 +75,7 @@ const testimonials: Testimonial[] = [
     sourceLabel: "LinkedIn",
   },
   {
+    resultBadge: "Horas de rotina manual eliminadas",
     quote:
       "Com Cursor IDE + MCPs, consegui acelerar rotinas manuais que antes tomavam horas. Agora gerencio tickets no Jira, GitHub e Notion com uma simples mensagem pro agente.",
     author: "koziel",
@@ -77,6 +85,7 @@ const testimonials: Testimonial[] = [
     sourceLabel: "TabNews",
   },
   {
+    resultBadge: "Gestão de equipe 100% automática",
     quote:
       "Eliminei as planilhas e aquela cobrança chata de 'quem está fazendo o quê'. Criei um micro-SaaS que distribui tarefas e calcula pagamentos automaticamente.",
     author: "JeanCarlosDev",
@@ -154,9 +163,17 @@ export function Testimonials() {
                   scrollSnapAlign: "start",
                 }}
               >
-                {/* Quote icon */}
+                {/* Result badge — primeiro elemento, ancora o scan */}
                 <div className="mb-4">
-                  <Quote className="w-5 h-5 text-mapa-accent opacity-40" />
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-mapa-accent/25 bg-mapa-accent/8 px-2.5 py-1 text-[11px] font-medium text-mapa-accent tracking-wide">
+                    <span className="w-1.5 h-1.5 rounded-full bg-mapa-accent shrink-0" />
+                    {t.resultBadge}
+                  </span>
+                </div>
+
+                {/* Quote icon + text */}
+                <div className="mb-3">
+                  <Quote className="w-4 h-4 text-mapa-accent opacity-30" />
                 </div>
 
                 {/* Quote text */}

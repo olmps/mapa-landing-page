@@ -1,5 +1,5 @@
 export const WHATSAPP_URL =
-  "https://wa.me/12058800598?text=Oi%21%20Quero%20saber%20mais%20sobre%20a%20mentoria%20MAPA.";
+  "https://wa.me/12058800598?text=Oi%21%20Acabei%20de%20ver%20a%20oferta%20da%20mentoria%20MAPA%2C%20gostaria%20de%20saber%20mais.";
 export const PAYMENT_URL = "/checkout";
 export const PRODUCT_NAME = "Mentoria MAPA";
 export const PRODUCT_PRICE = 1997;

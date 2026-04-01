@@ -2,6 +2,37 @@
 
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 
+const team = [
+  {
+    name: "Jonata Santos",
+    nickname: "The Project(s) Master",
+    bio: "Dev e PM técnico com 9 anos construindo produtos digitais. Apple Developer Academy Ambassador. Fundou a Olympus.",
+    likes: ["Treinos", "Jardinagem", "Tech"],
+    photo: "/team/jonata-santos.jpg",
+  },
+  {
+    name: "Vinicius Blembeel",
+    nickname: "The Devigner",
+    bio: "Designer Senior formado pela Apple Developer Academy. Faz design virar código — e código virar design.",
+    likes: ["Vegetais", "Games", "Cachorros", "Tattoos"],
+    photo: "/team/vinicius-blembeel.jpg",
+  },
+  {
+    name: "Joao Araujo",
+    nickname: "The Fast Learner Dev",
+    bio: "Full Stack Developer que trocou Administração por código há 2 anos. Aprende rápido e entrega mais rápido ainda.",
+    likes: ["Esportes", "Café"],
+    photo: "/team/joao-araujo.jpg",
+  },
+  {
+    name: "Lucas Bianco",
+    nickname: "The Diligent Coder",
+    bio: "Senior Dev vindo da Engenharia Mecânica. Arquiteta sistemas que escalam sem quebrar.",
+    likes: ["Esportes", "Jogar e criar games"],
+    photo: "/team/lucas-bianco.jpg",
+  },
+];
+
 const stats = [
   { value: "7+", label: "Produtos enviados" },
   { value: "+1M", label: "Usuários impactados" },
@@ -77,6 +108,13 @@ export function About() {
   return (
     <section className="mapa-section relative overflow-hidden" ref={ref}>
       <div className="grid-pattern" aria-hidden="true" />
+      <img
+        src="/team/blue-texture.png"
+        alt=""
+        aria-hidden="true"
+        className="absolute -right-32 top-1/4 w-[480px] h-[480px] object-cover pointer-events-none"
+        style={{ mixBlendMode: "screen", opacity: 0.2 }}
+      />
 
       <div className="mapa-container relative z-10">
         {/* Header */}
@@ -87,12 +125,69 @@ export function About() {
           <h2 className="reveal mapa-h2 text-mapa-text max-w-[700px] mx-auto">
             Por trás do <span className="text-accent-blue">MAPA</span>
           </h2>
+          <img
+            src="/team/olympus-logo.svg"
+            alt="Olympus"
+            className="reveal mx-auto mt-5 mb-2"
+            style={{ width: 160 }}
+          />
           <p className="reveal mt-4 text-mapa-text-secondary max-w-lg mx-auto">
             Somos a{" "}
             <strong className="text-mapa-text font-semibold">Olympus</strong> —
             um estúdio boutique de design e desenvolvimento de software. Nossos
             produtos já impactaram mais de 1 milhão de usuários.
           </p>
+        </div>
+
+        {/* Team */}
+        <div className="reveal grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-12 mb-16">
+          {team.map((member, i) => (
+            <div
+              key={i}
+              className="relative overflow-hidden rounded-xl border border-mapa-border bg-mapa-surface1 flex flex-col"
+              style={{ transitionDelay: `${i * 100}ms` }}
+            >
+              {/* Photo */}
+              <div className="aspect-square overflow-hidden">
+                <img
+                  src={member.photo}
+                  alt={member.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              {/* Content */}
+              <div className="p-5 flex flex-col flex-1">
+                <p
+                  className="text-mapa-accent text-sm font-semibold italic mb-1"
+                  style={{ fontFamily: "var(--font-syne)" }}
+                >
+                  {member.nickname}
+                </p>
+                <h4
+                  className="text-mapa-text font-bold text-lg leading-tight"
+                  style={{ fontFamily: "var(--font-syne)" }}
+                >
+                  {member.name}
+                </h4>
+                <p className="text-mapa-text-secondary text-sm mt-3 leading-relaxed flex-1">
+                  {member.bio}
+                </p>
+
+                {/* Likes */}
+                <div className="flex flex-wrap gap-1.5 mt-4">
+                  {member.likes.map((like, j) => (
+                    <span
+                      key={j}
+                      className="text-[11px] text-mapa-text-tertiary bg-mapa-surface2 px-2 py-0.5 rounded font-mono"
+                    >
+                      {like}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
 
         {/* Stats row */}

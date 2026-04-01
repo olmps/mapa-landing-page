@@ -8,24 +8,10 @@ import { WHATSAPP_URL, PAYMENT_URL, PRODUCT_PRICE, PIX_PRICE } from "@/lib/const
 import { WhatsAppIcon } from "@/components/icons/whatsapp";
 import { VAGAS_TOTAL } from "@/lib/edge-config";
 
-interface Feature {
-  text: string;
-  highlight?: boolean;
-}
-
-const features: Feature[] = [
-  { text: "Mentoria individual via WhatsApp" },
-  { text: "Aplicação completa do Método MAPA" },
-  { text: "Automatização de 1 processo digital" },
-  { text: "Suporte assíncrono 10:00–17:00" },
-  { text: "Resposta em até 24h úteis" },
-  { text: "100% humano respondendo", highlight: true },
-  { text: "Acesso a artefatos: skills, agentes, MCPs, workflows" },
-  { text: "Sem prazo — até a automação estar rodando" },
-  { text: "Garantia de 7 dias" },
-];
-
 const installmentValue = Math.ceil((PRODUCT_PRICE / 12) * 100) / 100;
+// Formata sem toLocaleString para evitar hydration mismatch
+const installmentFormatted = installmentValue.toFixed(2).replace(".", ",");
+const pixFormatted = PIX_PRICE.toFixed(2).replace(".", ",");
 
 interface PricingProps {
   vagasRestantes?: number;
@@ -36,174 +22,245 @@ export function Pricing({ vagasRestantes = VAGAS_TOTAL }: PricingProps) {
   const esgotado = vagasRestantes === 0;
 
   return (
-    <section className="mapa-section" ref={ref}>
+    <section id="investimento" className="mapa-section scroll-mt-24" ref={ref}>
       <div className="mapa-container">
         <div className="text-center mb-16">
           <h2 className="reveal mapa-h2 text-mapa-text">Investimento</h2>
         </div>
 
         <div className="reveal max-w-md mx-auto">
-          <div className="pricing-glow-wrapper" aria-hidden="false">
-            <div className="pricing-glow-inner accent-glow rounded-2xl bg-mapa-surface2 p-8 lg:p-10">
-              <p className="text-mapa-text-secondary text-sm font-medium uppercase tracking-wider mb-4">
-                MENTORIA MAPA
-              </p>
+          {/* Ancoragem de preço */}
+          <p className="text-center text-mapa-text-hint text-[14px] leading-relaxed mb-6 px-2">
+            Uma consultoria de automação cobra R$3.000–12.000 por projeto. Na mentoria MAPA, você aprende a fazer — e o conhecimento fica para sempre.
+          </p>
 
-              {/* Vagas badge */}
-              {esgotado ? (
-                <div className="inline-flex items-center gap-2 rounded-full border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] px-3 py-1.5 mb-6">
-                  <span className="w-2 h-2 rounded-full bg-[#555565]" />
-                  <span className="text-[#888898] text-sm font-medium">
-                    Vagas esgotadas para esta turma
-                  </span>
-                </div>
-              ) : vagasRestantes <= 5 ? (
-                <div className="inline-flex items-center gap-2 rounded-full border border-[rgba(0,85,255,0.2)] bg-[rgba(0,85,255,0.05)] px-3 py-1.5 mb-6">
-                  <span className="w-2 h-2 rounded-full bg-[#0055FF]" />
-                  <span className="text-[#EEEEF0] text-sm font-medium">
-                    Restam apenas{" "}
-                    <span
-                      className="font-semibold"
-                      style={{ fontFamily: "var(--font-fira-code)" }}
-                    >
-                      {vagasRestantes}
-                    </span>{" "}
-                    vagas 🔥
-                  </span>
-                </div>
-              ) : (
-                <div className="inline-flex items-center gap-2 rounded-full border border-[rgba(0,85,255,0.2)] bg-[rgba(0,85,255,0.05)] px-3 py-1.5 mb-6">
-                  <span className="w-2 h-2 rounded-full bg-[#0055FF]" />
-                  <span className="text-sm font-medium">
-                    <span className="text-[#EEEEF0]">Apenas{" "}
+          <div className="pricing-glow-wrapper" aria-hidden="false">
+            <div className="pricing-glow-inner accent-glow rounded-2xl bg-mapa-surface2 overflow-hidden">
+
+              {/* Badge de vagas — topo, discreto */}
+              <div className="px-8 pt-6 pb-0">
+                {esgotado ? (
+                  <div className="inline-flex items-center gap-1.5 rounded-full border border-white/8 bg-white/3 px-2.5 py-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-mapa-text-tertiary" />
+                    <span className="text-mapa-text-tertiary text-xs font-medium tracking-wide">
+                      Vagas esgotadas
+                    </span>
+                  </div>
+                ) : vagasRestantes <= 5 ? (
+                  <div className="inline-flex items-center gap-1.5 rounded-full border border-mapa-accent/20 bg-mapa-accent/5 px-2.5 py-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-mapa-accent" />
+                    <span className="text-mapa-text-secondary text-xs font-medium">
+                      Restam{" "}
                       <span
-                        className="font-semibold"
+                        className="text-mapa-text font-semibold"
+                        style={{ fontFamily: "var(--font-fira-code)" }}
+                      >
+                        {vagasRestantes}
+                      </span>{" "}
+                      vagas
+                    </span>
+                  </div>
+                ) : (
+                  <div className="inline-flex items-center gap-1.5 rounded-full border border-white/8 bg-white/3 px-2.5 py-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-mapa-text-tertiary" />
+                    <span className="text-mapa-text-tertiary text-xs font-medium tracking-wide">
+                      <span
                         style={{ fontFamily: "var(--font-fira-code)" }}
                       >
                         {VAGAS_TOTAL}
-                      </span>
-                    </span>{" "}
-                    <span className="text-[#888898]">vagas por turma</span>
+                      </span>{" "}
+                      vagas por turma
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              {/* Zona de preço — hero do card */}
+              <div className="px-8 pt-6 pb-7">
+                <p className="text-mapa-text-secondary text-xs font-medium uppercase tracking-widest mb-4">
+                  Mentoria MAPA
+                </p>
+
+                <div className="flex flex-col gap-1">
+                  <span className="text-mapa-text-tertiary text-sm font-medium">
+                    12x de
+                  </span>
+                  <span
+                    className="text-mapa-text font-bold leading-none"
+                    style={{
+                      fontFamily: "var(--font-syne)",
+                      fontSize: "clamp(44px, 8vw, 56px)",
+                      letterSpacing: "-0.02em",
+                    }}
+                  >
+                    R${installmentFormatted}
                   </span>
                 </div>
-              )}
 
-              {/* Installment price — PRIMARY highlight */}
-              <div className="mb-2">
-                <span
-                  className="text-mapa-accent font-bold"
-                  style={{
-                    fontFamily: "var(--font-syne)",
-                    fontSize: "clamp(20px, 3vw, 26px)",
-                    lineHeight: 1.2,
-                  }}
-                >
-                  12x de
-                </span>
-                <span
-                  className="text-mapa-text font-bold ml-2"
-                  style={{
-                    fontFamily: "var(--font-syne)",
-                    fontSize: "clamp(40px, 6vw, 56px)",
-                    lineHeight: 1.1,
-                  }}
-                >
-                  R${installmentValue.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}
-                </span>
+                {/* Pix como pill discreto */}
+                <div className="inline-flex items-center gap-2 mt-4 rounded-full border border-white/10 bg-white/4 px-3 py-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-mapa-text-secondary" />
+                  <span className="text-mapa-text-secondary text-sm">
+                    ou{" "}
+                    <span className="text-mapa-text font-medium">
+                      R${pixFormatted}
+                    </span>{" "}
+                    no Pix
+                    <span className="ml-1.5 text-xs text-mapa-text-tertiary">5% off</span>
+                  </span>
+                </div>
               </div>
 
-              {/* Full price — secondary */}
-              <p className="text-mapa-text-tertiary text-sm mb-2">
-                ou R${PRODUCT_PRICE.toLocaleString("pt-BR")} à vista no cartão
-              </p>
+              {/* Divider */}
+              <div className="mx-8 border-t border-white/5" />
 
-              {/* Pix price — green highlight */}
-              <div className="inline-flex items-center gap-2 rounded-full border border-green-500/20 bg-green-500/5 px-3 py-1.5 mb-8">
-                <span className="w-2 h-2 rounded-full bg-green-400" />
-                <span className="text-green-400 text-sm font-medium">
-                  R${PIX_PRICE.toLocaleString("pt-BR", { minimumFractionDigits: 2 })} no Pix (5% off)
-                </span>
+              {/* Features — organizadas em 3 blocos */}
+              <div className="px-8 py-7 space-y-7">
+
+                {/* Bloco 1 — Entregáveis */}
+                <div>
+                  <p className="text-mapa-text-tertiary text-xs font-medium uppercase tracking-widest mb-3">
+                    O que você recebe
+                  </p>
+                  <ul className="space-y-2.5">
+                    <li className="flex items-start gap-3">
+                      <Check className="w-4 h-4 mt-0.5 shrink-0 text-mapa-accent" />
+                      <div className="flex flex-col gap-0.5">
+                        <span className="text-[15px] text-mapa-text font-medium leading-snug">
+                          Sessão de consultoria individual de 1h com o Jonata
+                        </span>
+                        <span className="inline-flex items-center w-fit rounded-full border border-mapa-accent/20 bg-mapa-accent/8 px-2 py-0.5 text-[11px] text-mapa-accent font-medium tracking-wide mt-1">
+                          Diferencial exclusivo
+                        </span>
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <Check className="w-4 h-4 mt-0.5 shrink-0 text-mapa-accent" />
+                      <span className="text-[15px] text-mapa-text leading-snug">
+                        Aplicação completa do Método MAPA
+                      </span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <Check className="w-4 h-4 mt-0.5 shrink-0 text-mapa-accent" />
+                      <span className="text-[15px] text-mapa-text leading-snug">
+                        Automatização de 1 processo digital
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Bloco 2 — Suporte */}
+                <div>
+                  <p className="text-mapa-text-tertiary text-xs font-medium uppercase tracking-widest mb-3">
+                    Acompanhamento
+                  </p>
+                  <ul className="space-y-2.5">
+                    {[
+                      "Mentoria individual via WhatsApp",
+                      "Suporte assíncrono 10:00–17:00",
+                      "Resposta em até 24h úteis",
+                      "100% humano respondendo",
+                    ].map((text) => (
+                      <li key={text} className="flex items-start gap-3">
+                        <Check className="w-4 h-4 mt-0.5 shrink-0 text-mapa-text-tertiary" />
+                        <span className="text-[14px] text-mapa-text-secondary leading-snug">
+                          {text}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Bloco 3 — Acesso */}
+                <div>
+                  <p className="text-mapa-text-tertiary text-xs font-medium uppercase tracking-widest mb-3">
+                    Acesso
+                  </p>
+                  <ul className="space-y-2">
+                    {[
+                      "Artefatos: skills, agentes, MCPs, workflows",
+                      "Acesso durante todo o período de implementação",
+                      "Garantia de 7 dias",
+                    ].map((text) => (
+                      <li key={text} className="flex items-start gap-3">
+                        <Check className="w-4 h-4 mt-0.5 shrink-0 text-mapa-text-hint" />
+                        <span className="text-[13px] text-mapa-text-tertiary leading-snug">
+                          {text}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
 
-              <ul className="space-y-3 mb-10">
-                {features.map((feature, i) => (
-                  <li
-                    key={i}
-                    className={cn(
-                      "flex items-start gap-3",
-                      feature.highlight &&
-                        "rounded-lg bg-green-500/5 border border-green-500/15 px-3 py-2 -mx-3"
-                    )}
-                  >
-                    <Check
+              {/* Divider */}
+              <div className="mx-8 border-t border-white/5" />
+
+              {/* CTAs */}
+              <div className="px-8 pt-6 pb-8">
+                {esgotado ? (
+                  <>
+                    <a
+                      href={WHATSAPP_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className={cn(
-                        "w-4 h-4 mt-0.5 shrink-0",
-                        feature.highlight ? "text-green-400" : "text-mapa-accent"
-                      )}
-                    />
-                    <span
-                      className={cn(
-                        "text-[15px]",
-                        feature.highlight
-                          ? "text-green-400 font-medium"
-                          : "text-mapa-text-secondary"
+                        buttonVariants({ size: "lg" }),
+                        "w-full rounded-full bg-mapa-accent hover:bg-mapa-accent-md text-white font-medium h-12 text-base transition-colors duration-300 no-underline"
                       )}
                     >
-                      {feature.text}
-                    </span>
-                  </li>
-                ))}
-              </ul>
+                      <WhatsAppIcon className="w-4 h-4" />
+                      Entrar na lista de espera
+                    </a>
+                    <p className="text-center mt-4 text-mapa-text-tertiary text-sm">
+                      Vagas esgotadas — entre na lista para a próxima turma.
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <a
+                      href={PAYMENT_URL}
+                      className={cn(
+                        buttonVariants({ size: "lg" }),
+                        "w-full rounded-full bg-white hover:bg-white/90 text-[#030305] font-semibold h-12 text-base transition-colors duration-300 no-underline"
+                      )}
+                    >
+                      Comprar agora
+                    </a>
+                    <a
+                      href={WHATSAPP_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={cn(
+                        buttonVariants({ variant: "ghost", size: "lg" }),
+                        "w-full rounded-full text-mapa-text-secondary hover:text-mapa-text font-medium h-11 text-sm transition-all duration-300 no-underline mt-2"
+                      )}
+                    >
+                      <WhatsAppIcon className="w-4 h-4" />
+                      Tirar dúvidas no WhatsApp
+                    </a>
+                  </>
+                )}
+              </div>
 
-              {esgotado ? (
-                <>
-                  <a
-                    href={WHATSAPP_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={cn(
-                      buttonVariants({ size: "lg" }),
-                      "w-full rounded-full bg-mapa-accent hover:bg-mapa-accent-md text-white font-medium h-12 text-base transition-colors duration-300 no-underline"
-                    )}
-                  >
-                    <WhatsAppIcon className="w-4 h-4" />
-                    Entrar na lista de espera
-                  </a>
-                  <p className="text-center mt-4 text-mapa-text-tertiary text-sm">
-                    Vagas esgotadas — entre na lista para a próxima turma.
-                  </p>
-                </>
-              ) : (
-                <>
-                  <a
-                    href={PAYMENT_URL}
-                    className={cn(
-                      buttonVariants({ size: "lg" }),
-                      "w-full rounded-full bg-mapa-accent hover:bg-mapa-accent-md text-white font-medium h-12 text-base transition-colors duration-300 no-underline"
-                    )}
-                  >
-                    Comprar agora
-                  </a>
-                  <a
-                    href={WHATSAPP_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={cn(
-                      buttonVariants({ variant: "outline", size: "lg" }),
-                      "w-full rounded-full border-mapa-border hover:border-mapa-border-hover bg-transparent text-mapa-text-secondary hover:text-mapa-text font-medium h-12 text-base transition-all duration-300 no-underline mt-3"
-                    )}
-                  >
-                    <WhatsAppIcon className="w-4 h-4" />
-                    Tirar dúvidas no WhatsApp
-                  </a>
-                </>
-              )}
             </div>
           </div>
 
           <p className="text-center mt-6 text-mapa-text-hint text-sm">
             Parcele em até 12x no cartão · 5% off no Pix
           </p>
+
+          {/* Custo da espera */}
+          <div className="mt-8 text-center space-y-1 px-2">
+            <p className="text-mapa-text-hint text-[13px] leading-relaxed">
+              Cada semana sem automatizar são horas que você não recupera.
+            </p>
+            <p className="text-mapa-text-hint text-[13px] leading-relaxed">
+              Se você gasta 2h por dia em tarefas repetitivas, são{" "}
+              <span className="text-mapa-text-secondary font-medium">40h por mês</span>{" "}
+              — tempo que poderia estar investindo no que realmente importa.
+            </p>
+          </div>
         </div>
       </div>
     </section>

@@ -44,7 +44,7 @@ export function Hero() {
         </h1>
 
         <p
-          className="reveal mt-6 max-w-[600px] text-mapa-text-secondary leading-relaxed"
+          className="reveal mt-6 max-w-[600px] text-[#b0b0bc] leading-relaxed"
           style={{ animationDelay: "100ms" }}
         >
           Mentoria individual assíncrona via WhatsApp. Te guiamos passo a passo
@@ -58,7 +58,7 @@ export function Hero() {
           {tools.map((tool) => (
             <span
               key={tool}
-              className="text-[11px] text-mapa-text-tertiary bg-mapa-surface2 px-2.5 py-1 rounded-full font-mono"
+              className="text-[11px] text-[#9090a0] bg-mapa-surface2 px-2.5 py-1 rounded-full font-mono"
             >
               {tool}
             </span>
@@ -70,25 +70,25 @@ export function Hero() {
           style={{ animationDelay: "200ms" }}
         >
           <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#investimento"
             className={cn(
               buttonVariants({ size: "lg" }),
               "rounded-full bg-mapa-accent hover:bg-mapa-accent-md text-white font-medium px-8 h-12 text-base transition-colors duration-300 no-underline"
             )}
           >
-            <WhatsAppIcon className="w-4 h-4" />
-            Falar no WhatsApp
+            Automatizar meu processo
           </a>
           <a
-            href="/checkout"
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className={cn(
               buttonVariants({ variant: "outline", size: "lg" }),
-              "rounded-full border-mapa-border hover:border-mapa-border-hover bg-transparent text-mapa-text-secondary hover:text-mapa-text font-medium px-8 h-12 text-base transition-all duration-300 no-underline"
+              "rounded-full border-green-500/30 hover:border-green-500/50 bg-transparent text-green-400 hover:text-green-300 font-medium px-8 h-12 text-base transition-all duration-300 no-underline"
             )}
           >
-            12x de R$166,42
+            <WhatsAppIcon className="w-4 h-4" />
+            Falar no WhatsApp
           </a>
         </div>
 
