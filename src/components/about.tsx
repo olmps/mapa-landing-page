@@ -25,7 +25,7 @@ const team = [
     photo: "/team/lucas-bianco.jpg",
   },
   {
-    name: "Joao Araujo",
+    name: "João Araújo",
     nickname: "The Fast Learner Dev",
     bio: "Full Stack Developer que trocou Administração por código há 2 anos. Aprende rápido e entrega mais rápido ainda.",
     likes: ["Esportes", "Café"],
