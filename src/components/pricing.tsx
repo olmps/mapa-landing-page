@@ -111,7 +111,7 @@ export function Pricing({ vagasRestantes = VAGAS_TOTAL }: PricingProps) {
                 </div>
                 {/* Nota do café */}
                 <p className="text-mapa-text-hint text-[12px] mt-3 italic">
-                  Menos de R$5,55/dia — menos que um café espresso em qualquer cafeteria do Brasil.
+                  R$5,55/dia — menos que um café espresso em qualquer cafeteria do Brasil.
                 </p>
               </div>
 
