@@ -7,6 +7,7 @@ import { Check } from "lucide-react";
 import { WHATSAPP_URL, PAYMENT_URL, PRODUCT_PRICE, PIX_PRICE } from "@/lib/constants";
 import { WhatsAppIcon } from "@/components/icons/whatsapp";
 import { VAGAS_TOTAL } from "@/lib/edge-config";
+import { posthog } from "@/lib/posthog";
 
 const installmentValue = Math.ceil((PRODUCT_PRICE / 12) * 100) / 100;
 // Formata sem toLocaleString para evitar hydration mismatch
@@ -208,6 +209,7 @@ export function Pricing({ vagasRestantes = VAGAS_TOTAL }: PricingProps) {
                       href={WHATSAPP_URL}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => posthog.capture("whatsapp_click", { location: "pricing_waitlist" })}
                       className={cn(
                         buttonVariants({ size: "lg" }),
                         "w-full rounded-full bg-mapa-accent hover:bg-mapa-accent-md text-white font-medium h-12 text-base transition-colors duration-300 no-underline"
@@ -224,6 +226,7 @@ export function Pricing({ vagasRestantes = VAGAS_TOTAL }: PricingProps) {
                   <>
                     <a
                       href={PAYMENT_URL}
+                      onClick={() => posthog.capture("cta_click", { location: "pricing" })}
                       className={cn(
                         buttonVariants({ size: "lg" }),
                         "w-full rounded-full bg-white hover:bg-white/90 text-[#030305] font-semibold h-12 text-base transition-colors duration-300 no-underline"
@@ -235,6 +238,7 @@ export function Pricing({ vagasRestantes = VAGAS_TOTAL }: PricingProps) {
                       href={WHATSAPP_URL}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => posthog.capture("whatsapp_click", { location: "pricing" })}
                       className={cn(
                         buttonVariants({ variant: "ghost", size: "lg" }),
                         "w-full rounded-full text-mapa-text-secondary hover:text-mapa-text font-medium h-11 text-sm transition-all duration-300 no-underline mt-2"

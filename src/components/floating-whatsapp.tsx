@@ -2,6 +2,7 @@
 
 import { WHATSAPP_URL } from "@/lib/constants";
 import { WhatsAppIcon } from "@/components/icons/whatsapp";
+import { posthog } from "@/lib/posthog";
 
 export function FloatingWhatsApp() {
   return (
@@ -10,6 +11,7 @@ export function FloatingWhatsApp() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Falar no WhatsApp"
+      onClick={() => posthog.capture("whatsapp_click", { location: "floating_button" })}
       className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white shadow-lg shadow-[#25D366]/25 transition-all duration-300 hover:scale-110 no-underline"
     >
       <WhatsAppIcon className="w-6 h-6" />

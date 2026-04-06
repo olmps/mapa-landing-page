@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { Syne, Outfit, Fira_Code } from "next/font/google";
+import { Suspense } from "react";
+import { PostHogProvider } from "@/components/posthog-provider";
+import { MetaPixel } from "@/components/meta-pixel";
 import "./globals.css";
 
 const syne = Syne({
@@ -39,7 +42,13 @@ export default function RootLayout({
       lang="pt-BR"
       className={`${syne.variable} ${outfit.variable} ${firaCode.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+          <Suspense fallback={null}>
+            <PostHogProvider />
+            <MetaPixel />
+          </Suspense>
+          {children}
+        </body>
     </html>
   );
 }

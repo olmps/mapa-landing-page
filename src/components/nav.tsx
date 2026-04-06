@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { WHATSAPP_URL } from "@/lib/constants";
 import { WhatsAppIcon } from "@/components/icons/whatsapp";
+import { posthog } from "@/lib/posthog";
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -35,6 +36,7 @@ export function Nav() {
           href={WHATSAPP_URL}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => posthog.capture("whatsapp_click", { location: "nav" })}
           className={cn(
             buttonVariants({ size: "sm" }),
             "rounded-full bg-mapa-accent hover:bg-mapa-accent-md text-white text-sm font-medium px-5 h-9 transition-colors duration-300 no-underline"

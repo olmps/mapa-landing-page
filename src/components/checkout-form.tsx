@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, type FormEvent } from "react";
 import { PRODUCT_PRICE, PIX_PRICE, WHATSAPP_PURCHASE_URL } from "@/lib/constants";
+import { posthog } from "@/lib/posthog";
 
 type PaymentMethod = "PIX" | "CREDIT_CARD";
 type Status = "idle" | "submitting" | "pix-pending" | "redirecting" | "error";
@@ -55,6 +56,14 @@ export function CheckoutForm() {
 
   const [installmentError, setInstallmentError] = useState(false);
 
+  // Track checkout initiation
+  useEffect(() => {
+    posthog.capture("checkout_started");
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("track", "InitiateCheckout");
+    }
+  }, []);
+
   // Fetch installment options from Asaas when CC is selected
   useEffect(() => {
     if (paymentMethod !== "CREDIT_CARD") return;
@@ -94,6 +103,10 @@ export function CheckoutForm() {
     setStatus("submitting");
 
     const form = new FormData(e.currentTarget);
+
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("track", "AddPaymentInfo");
+    }
 
     try {
       const res = await fetch("/api/checkout", {

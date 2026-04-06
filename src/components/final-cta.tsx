@@ -6,6 +6,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { WHATSAPP_URL } from "@/lib/constants";
 import { WhatsAppIcon } from "@/components/icons/whatsapp";
 import { VAGAS_TOTAL } from "@/lib/edge-config";
+import { posthog } from "@/lib/posthog";
 
 interface FinalCTAProps {
   vagasRestantes?: number;
@@ -27,6 +28,7 @@ export function FinalCTA({ vagasRestantes = VAGAS_TOTAL }: FinalCTAProps) {
         <div className="reveal mt-10 flex flex-col sm:flex-row gap-4 justify-center">
           <a
             href="#investimento"
+            onClick={() => posthog.capture("cta_click", { location: "final_cta" })}
             className={cn(
               buttonVariants({ size: "lg" }),
               "rounded-full bg-mapa-accent hover:bg-mapa-accent-md text-white font-medium px-10 h-14 text-lg transition-colors duration-300 no-underline"
@@ -38,6 +40,7 @@ export function FinalCTA({ vagasRestantes = VAGAS_TOTAL }: FinalCTAProps) {
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => posthog.capture("whatsapp_click", { location: "final_cta" })}
             className={cn(
               buttonVariants({ variant: "outline", size: "lg" }),
               "rounded-full border-green-500/30 hover:border-green-500/50 bg-transparent text-green-400 hover:text-green-300 font-medium px-10 h-14 text-lg transition-all duration-300 no-underline"
