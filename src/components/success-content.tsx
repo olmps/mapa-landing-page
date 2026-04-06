@@ -51,6 +51,8 @@ export function SuccessContent({
             style={{ fontFamily: "var(--font-syne)" }}
           >
             MAPA
+            <span className="text-mapa-text-tertiary font-normal text-[10px] tracking-wider ml-1.5 uppercase">by</span>
+            <img src="/team/olympus-logo.svg" alt="Olympus" className="inline-block ml-1 opacity-50" style={{ width: 56, verticalAlign: 'middle' }} />
           </Link>
         </div>
       </nav>
