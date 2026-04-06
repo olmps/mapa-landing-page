@@ -150,24 +150,6 @@ export function ValueStack() {
               </span>
             </div>
 
-            {/* Divider interno */}
-            <div className="border-t border-white/5" />
-
-            {/* Economia — destaque */}
-            <div className="flex items-center justify-between gap-4">
-              <span className="text-[14px] sm:text-[15px] text-mapa-text font-medium">
-                Você economiza mais de
-              </span>
-              <span
-                className="shrink-0 text-[20px] sm:text-[24px] font-bold text-mapa-accent leading-none tabular-nums"
-                style={{
-                  fontFamily: "var(--font-syne)",
-                  letterSpacing: "-0.02em",
-                }}
-              >
-                R$24.000
-              </span>
-            </div>
           </div>
         </div>
       </div>

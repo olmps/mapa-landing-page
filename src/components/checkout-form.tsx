@@ -34,7 +34,7 @@ interface InstallmentOption {
 }
 
 function formatCurrency(v: number) {
-  return v.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  return v.toFixed(2).replace(".", ",");
 }
 
 const inputStyles =
