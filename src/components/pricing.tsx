@@ -3,7 +3,7 @@
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
-import { Check } from "lucide-react";
+import { Check, ShieldCheck } from "lucide-react";
 import { WHATSAPP_URL, PAYMENT_URL, PRODUCT_PRICE, PIX_PRICE } from "@/lib/constants";
 import { WhatsAppIcon } from "@/components/icons/whatsapp";
 import { VAGAS_TOTAL } from "@/lib/edge-config";
@@ -185,7 +185,6 @@ export function Pricing({ vagasRestantes = VAGAS_TOTAL }: PricingProps) {
                     {[
                       "Artefatos: skills, agentes, MCPs, workflows",
                       "Acesso durante todo o período de implementação",
-                      "Garantia de 7 dias",
                     ].map((text) => (
                       <li key={text} className="flex items-start gap-3">
                         <Check className="w-4 h-4 mt-0.5 shrink-0 text-mapa-text-hint" />
@@ -232,8 +231,18 @@ export function Pricing({ vagasRestantes = VAGAS_TOTAL }: PricingProps) {
                         "w-full rounded-full bg-white hover:bg-white/90 text-[#030305] font-semibold h-12 text-base transition-colors duration-300 no-underline"
                       )}
                     >
-                      Comprar agora
+                      Garantir minha vaga
                     </a>
+
+                    {/* Garantia inline — abaixo do botão de compra */}
+                    <div className="mt-4 flex items-start gap-3 rounded-xl border border-mapa-accent/15 bg-mapa-accent/5 px-4 py-3">
+                      <ShieldCheck className="w-4 h-4 mt-0.5 shrink-0 text-mapa-accent" />
+                      <p className="text-[13px] text-mapa-text-secondary leading-snug">
+                        <span className="text-mapa-text font-medium">Garantia de 7 dias.</span>{" "}
+                        Comece, fale conosco por 7 dias. Se não fizer sentido, devolvemos tudo — sem perguntas.
+                      </p>
+                    </div>
+
                     <a
                       href={WHATSAPP_URL}
                       target="_blank"

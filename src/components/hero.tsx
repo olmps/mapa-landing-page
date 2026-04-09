@@ -39,17 +39,17 @@ export function Hero() {
         </Badge>
 
         <h1 className="reveal mapa-display max-w-[900px] text-mapa-text">
-          Automatize qualquer{" "}
-          <span className="text-accent-blue">processo digital</span> para sua
-          vida ou empresa.
+          Perdido no{" "}
+          <span className="text-accent-blue">mar de ferramentas</span>?
         </h1>
 
         <p
           className="reveal mt-6 max-w-[600px] text-[#b0b0bc] leading-relaxed"
           style={{ animationDelay: "100ms" }}
         >
-          Mentoria individual assíncrona via WhatsApp. Te guiamos passo a passo
-          pela metodologia MAPA até seu processo estar rodando no automático.
+          Você sabe que precisa automatizar. Só não sabe por onde começar.
+          Mentoria individual para construir automações que funcionam — com
+          acompanhamento via WhatsApp enquanto você constrói.
         </p>
 
         <div

@@ -12,7 +12,6 @@ import { Testimonials } from "@/components/testimonials";
 import { QualifyCTA } from "@/components/qualify-cta";
 import { Qualify } from "@/components/qualify";
 import { Pricing } from "@/components/pricing";
-import { Guarantee } from "@/components/guarantee";
 import { FAQ } from "@/components/faq";
 import { About } from "@/components/about";
 import { FinalCTA } from "@/components/final-cta";
@@ -45,7 +44,6 @@ export default async function Home() {
         <QualifyCTA />
         <Qualify />
         <Pricing vagasRestantes={vagasRestantes} />
-        <Guarantee />
         <FAQ />
         <About />
         <FinalCTA vagasRestantes={vagasRestantes} />
