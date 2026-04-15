@@ -8,6 +8,7 @@ import { WHATSAPP_URL } from "@/lib/constants";
 import { WhatsAppIcon } from "@/components/icons/whatsapp";
 import { HumanBadge } from "@/components/human-badge";
 import { posthog } from "@/lib/posthog";
+import { generateEventId } from "@/lib/event-id";
 
 const tools = [
   "Claude",
@@ -84,7 +85,13 @@ export function Hero() {
             href={WHATSAPP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => posthog.capture("whatsapp_click", { location: "hero" })}
+            onClick={() => {
+              posthog.capture("whatsapp_click", { location: "hero" });
+              if (typeof window !== "undefined" && window.fbq) {
+                const leadEventId = generateEventId();
+                window.fbq("track", "Lead", {}, { eventID: leadEventId });
+              }
+            }}
             className={cn(
               buttonVariants({ variant: "outline", size: "lg" }),
               "rounded-full border-green-500/30 hover:border-green-500/50 bg-transparent text-green-400 hover:text-green-300 font-medium px-8 h-12 text-base transition-all duration-300 no-underline"

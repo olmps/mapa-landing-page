@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { decrementVagas } from "@/lib/edge-config";
+import { sendCapiEvent } from "@/lib/capi";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -12,6 +13,7 @@ interface AsaasPayment {
   status: string;
   customerName?: string;   // present in some webhook payloads
   customerPhone?: string;  // present in some webhook payloads
+  externalReference?: string; // purchaseEventId stored during checkout
 }
 
 interface AsaasWebhookBody {
@@ -22,6 +24,7 @@ interface AsaasWebhookBody {
 interface AsaasCustomer {
   id: string;
   name: string;
+  email?: string;
   mobilePhone?: string;
   phone?: string;
 }
@@ -197,11 +200,12 @@ export async function POST(request: Request) {
       `[Asaas Webhook] ${body.event} — Payment ${payment.id}, Customer ${payment.customer}`
     );
 
-    // --- Resolve customer name and phone ---
+    // --- Resolve customer name, phone, and email ---
     // The Asaas webhook payload does not always include name/phone directly
     // so we fall back to a customer API lookup when needed.
     let customerName: string;
     let customerPhone: string;
+    let customerEmail: string | undefined;
 
     if (payment.customerName && payment.customerPhone) {
       customerName = payment.customerName;
@@ -211,6 +215,7 @@ export async function POST(request: Request) {
         const customer = await fetchAsaasCustomer(payment.customer);
         customerName = customer.name;
         customerPhone = customer.mobilePhone ?? customer.phone ?? "";
+        customerEmail = customer.email;
       } catch (err) {
         console.error("[Asaas Webhook] Failed to fetch customer from Asaas:", err);
         // Respond 200 so Asaas does not retry — the purchase already happened.
@@ -224,6 +229,31 @@ export async function POST(request: Request) {
       );
       return NextResponse.json({ received: true }, { status: 200 });
     }
+
+    // --- Fire CAPI Purchase (server-side, authoritative) ---
+    // event_id matches the purchaseEventId generated during checkout form submit
+    // and stored in externalReference. The browser-side fbq('track','Purchase')
+    // in success-content.tsx fires the same event_id — Meta deduplicates them.
+    const purchaseEventId = payment.externalReference ?? undefined;
+    sendCapiEvent({
+      event_name: "Purchase",
+      event_id: purchaseEventId,
+      event_source_url: "https://mapa.olmps.co/success",
+      user_data: {
+        email: customerEmail,
+        phone: customerPhone,
+      },
+      custom_data: {
+        value: payment.value,
+        currency: "BRL",
+        content_name: "Mentoria MAPA",
+        content_type: "product",
+        order_id: payment.id,
+      },
+    }).catch((err) => {
+      // Non-fatal — log and continue so Asaas gets its 200
+      console.error("[Asaas Webhook] CAPI Purchase error:", err);
+    });
 
     // --- Decrement vagas ---
     await decrementVagas().catch((err) => {

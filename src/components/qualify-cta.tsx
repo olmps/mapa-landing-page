@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { WHATSAPP_URL } from "@/lib/constants";
 import { WhatsAppIcon } from "@/components/icons/whatsapp";
+import { generateEventId } from "@/lib/event-id";
 
 export function QualifyCTA() {
   const ref = useScrollReveal();
@@ -59,6 +60,12 @@ export function QualifyCTA() {
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => {
+                  if (typeof window !== "undefined" && window.fbq) {
+                    const leadEventId = generateEventId();
+                    window.fbq("track", "Lead", {}, { eventID: leadEventId });
+                  }
+                }}
                 className={cn(
                   buttonVariants({ size: "lg" }),
                   "reveal mt-10 rounded-full bg-[#25D366] hover:bg-[#20BD5A] text-white font-medium px-10 h-14 text-lg transition-colors duration-300 no-underline"

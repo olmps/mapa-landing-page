@@ -6,11 +6,21 @@ import {
 } from "@/lib/asaas";
 import { PRODUCT_PRICE, PIX_PRICE } from "@/lib/constants";
 import { getVagasRestantes } from "@/lib/edge-config";
+import { sendCapiEvent } from "@/lib/capi";
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, email, phone, cpfCnpj, paymentMethod, installments } = body;
+    const {
+      name,
+      email,
+      phone,
+      cpfCnpj,
+      paymentMethod,
+      installments,
+      icEventId,
+      purchaseEventId,
+    } = body;
 
     if (!name || !email || !phone || !cpfCnpj || !paymentMethod) {
       return NextResponse.json(
@@ -70,6 +80,28 @@ export async function POST(request: Request) {
       installmentValue,
       dueDate,
       callback: { successUrl, autoRedirect: true },
+      // Store purchaseEventId so the Asaas webhook can retrieve it for CAPI dedup
+      externalReference: purchaseEventId ?? undefined,
+    });
+
+    // Fire server-side CAPI InitiateCheckout (deduplicates with the browser pixel event)
+    sendCapiEvent({
+      event_name: "InitiateCheckout",
+      event_id: icEventId ?? undefined,
+      event_source_url:
+        request.headers.get("referer") ?? "https://mapa.olmps.co/checkout",
+      user_data: {
+        client_ip_address:
+          request.headers.get("x-forwarded-for")?.split(",")[0].trim() ??
+          undefined,
+        client_user_agent: request.headers.get("user-agent") ?? undefined,
+        email: email ?? undefined,
+        phone: phone ?? undefined,
+      },
+      custom_data: { value: chargeValue, currency: "BRL" },
+    }).catch((err) => {
+      // Non-fatal — log and continue
+      console.error("[Checkout] CAPI InitiateCheckout error:", err);
     });
 
     // Return based on payment method

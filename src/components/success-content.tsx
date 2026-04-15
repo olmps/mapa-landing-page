@@ -6,6 +6,7 @@ import Link from "next/link";
 import { WhatsAppIcon } from "@/components/icons/whatsapp";
 import { WHATSAPP_PURCHASE_URL, PRODUCT_PRICE } from "@/lib/constants";
 import { posthog } from "@/lib/posthog";
+import { getStoredEventId } from "@/lib/event-id";
 
 export function SuccessContent({
   paymentId,
@@ -15,7 +16,16 @@ export function SuccessContent({
   useEffect(() => {
     posthog.capture("purchase_completed", { payment_id: paymentId });
     if (typeof window !== "undefined" && window.fbq) {
-      window.fbq("track", "Purchase", { value: PRODUCT_PRICE, currency: "BRL" });
+      // Retrieve the purchase event ID generated during checkout form submission.
+      // The Asaas webhook already (or will) fire the server-side CAPI Purchase
+      // with the same event ID — this browser call deduplicates against it.
+      const purEventId = getStoredEventId("pur") ?? undefined;
+      window.fbq(
+        "track",
+        "Purchase",
+        { value: PRODUCT_PRICE, currency: "BRL" },
+        { eventID: purEventId }
+      );
     }
   }, [paymentId]);
 

@@ -42,6 +42,7 @@ export async function createPayment(data: {
   installmentValue?: number;
   dueDate: string;
   callback?: { successUrl: string; autoRedirect: boolean };
+  externalReference?: string;
 }) {
   return asaasFetch("/payments", {
     method: "POST",

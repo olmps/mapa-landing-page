@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, type FormEvent } from "react";
 import { PRODUCT_PRICE, PIX_PRICE, WHATSAPP_PURCHASE_URL } from "@/lib/constants";
 import { posthog } from "@/lib/posthog";
+import { generateEventId, setStoredEventId } from "@/lib/event-id";
 
 type PaymentMethod = "PIX" | "CREDIT_CARD";
 type Status = "idle" | "submitting" | "pix-pending" | "redirecting" | "error";
@@ -56,11 +57,13 @@ export function CheckoutForm() {
 
   const [installmentError, setInstallmentError] = useState(false);
 
-  // Track checkout initiation
+  // Track checkout initiation with dedup event ID
   useEffect(() => {
     posthog.capture("checkout_started");
     if (typeof window !== "undefined" && window.fbq) {
-      window.fbq("track", "InitiateCheckout");
+      const icEventId = generateEventId();
+      setStoredEventId("ic", icEventId);
+      window.fbq("track", "InitiateCheckout", {}, { eventID: icEventId });
     }
   }, []);
 
@@ -105,8 +108,21 @@ export function CheckoutForm() {
     const form = new FormData(e.currentTarget);
 
     if (typeof window !== "undefined" && window.fbq) {
-      window.fbq("track", "AddPaymentInfo");
+      const apiEventId = generateEventId();
+      setStoredEventId("api", apiEventId);
+      window.fbq("track", "AddPaymentInfo", {}, { eventID: apiEventId });
     }
+
+    // Generate a Purchase event ID now so it can be stored in the payment
+    // record (externalReference) and later used by the Asaas webhook for CAPI dedup.
+    const purchaseEventId = generateEventId();
+    setStoredEventId("pur", purchaseEventId);
+
+    // Retrieve the InitiateCheckout event ID for server-side CAPI dedup
+    const icEventId =
+      typeof window !== "undefined"
+        ? (sessionStorage.getItem("mapa_eid_ic") ?? undefined)
+        : undefined;
 
     try {
       const res = await fetch("/api/checkout", {
@@ -119,6 +135,8 @@ export function CheckoutForm() {
           cpfCnpj: form.get("cpf"),
           paymentMethod,
           installments: paymentMethod === "CREDIT_CARD" ? installments : 1,
+          icEventId,
+          purchaseEventId,
         }),
       });
 

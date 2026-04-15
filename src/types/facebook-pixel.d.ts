@@ -1,7 +1,11 @@
+interface FacebookPixelEventOptions {
+  eventID?: string;
+}
+
 interface FacebookPixelEvent {
   (command: "init", pixelId: string): void;
-  (command: "track", event: string, params?: Record<string, unknown>): void;
-  (command: "trackCustom", event: string, params?: Record<string, unknown>): void;
+  (command: "track", event: string, params?: Record<string, unknown>, options?: FacebookPixelEventOptions): void;
+  (command: "trackCustom", event: string, params?: Record<string, unknown>, options?: FacebookPixelEventOptions): void;
 }
 
 interface Window {
