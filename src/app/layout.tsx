@@ -42,13 +42,6 @@ export default function RootLayout({
       lang="pt-BR"
       className={`${syne.variable} ${outfit.variable} ${firaCode.variable} h-full antialiased`}
     >
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var p=new URLSearchParams(window.location.search);var f=p.get('fbclid');if(f){document.cookie='_fbc=fb.1.'+Date.now()+'.'+f+';path=/;max-age=7776000;secure;samesite=lax';}}catch(e){}})();`,
-          }}
-        />
-      </head>
       <body className="min-h-full flex flex-col">
           <Suspense fallback={null}>
             <PostHogProvider />
