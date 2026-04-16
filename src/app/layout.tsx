@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import { Syne, Outfit, Fira_Code } from "next/font/google";
 import { Suspense } from "react";
 import { PostHogProvider } from "@/components/posthog-provider";
@@ -43,14 +42,14 @@ export default function RootLayout({
       lang="pt-BR"
       className={`${syne.variable} ${outfit.variable} ${firaCode.variable} h-full antialiased`}
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var p=new URLSearchParams(window.location.search);var f=p.get('fbclid');if(f){document.cookie='_fbc=fb.1.'+Date.now()+'.'+f+';path=/;max-age=7776000;secure;samesite=lax';}}catch(e){}})();`,
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col">
-          <Script
-            id="fbc-capture"
-            strategy="beforeInteractive"
-            dangerouslySetInnerHTML={{
-              __html: `(function(){try{var p=new URLSearchParams(window.location.search);var f=p.get('fbclid');if(f){document.cookie='_fbc=fb.1.'+Date.now()+'.'+f+';path=/;max-age=7776000;secure;samesite=lax';}}catch(e){}})();`,
-            }}
-          />
           <Suspense fallback={null}>
             <PostHogProvider />
             <MetaPixel />
