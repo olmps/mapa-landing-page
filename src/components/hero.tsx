@@ -4,11 +4,11 @@ import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { WHATSAPP_URL } from "@/lib/constants";
+import { WHATSAPP_URL, PRODUCT_NAME, PRODUCT_PRICE } from "@/lib/constants";
 import { WhatsAppIcon } from "@/components/icons/whatsapp";
 import { HumanBadge } from "@/components/human-badge";
 import { posthog } from "@/lib/posthog";
-import { generateEventId } from "@/lib/event-id";
+import { generateEventId, setStoredEventId } from "@/lib/event-id";
 
 const tools = [
   "Claude",
@@ -73,7 +73,28 @@ export function Hero() {
         >
           <a
             href="#investimento"
-            onClick={() => posthog.capture("cta_click", { location: "hero" })}
+            onClick={() => {
+              posthog.capture("cta_click", { location: "hero" });
+              if (typeof window !== "undefined" && window.fbq) {
+                const leadEventId = generateEventId();
+                setStoredEventId("lead_investimento", leadEventId);
+                try {
+                  sessionStorage.setItem("lead_investimento_event_id", leadEventId);
+                } catch {
+                  // non-fatal
+                }
+                window.fbq(
+                  "track",
+                  "Lead",
+                  {
+                    content_name: `${PRODUCT_NAME} - intent to buy`,
+                    value: PRODUCT_PRICE,
+                    currency: "BRL",
+                  },
+                  { eventID: leadEventId }
+                );
+              }
+            }}
             className={cn(
               buttonVariants({ size: "lg" }),
               "rounded-full bg-mapa-accent hover:bg-mapa-accent-md text-white font-medium px-8 h-12 text-base transition-colors duration-300 no-underline"

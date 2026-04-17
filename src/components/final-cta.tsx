@@ -6,8 +6,9 @@ import { buttonVariants } from "@/components/ui/button";
 import { WHATSAPP_URL } from "@/lib/constants";
 import { WhatsAppIcon } from "@/components/icons/whatsapp";
 import { VAGAS_TOTAL } from "@/lib/edge-config";
+import { PRODUCT_NAME, PRODUCT_PRICE } from "@/lib/constants";
 import { posthog } from "@/lib/posthog";
-import { generateEventId } from "@/lib/event-id";
+import { generateEventId, setStoredEventId } from "@/lib/event-id";
 
 interface FinalCTAProps {
   vagasRestantes?: number;
@@ -29,7 +30,28 @@ export function FinalCTA({ vagasRestantes = VAGAS_TOTAL }: FinalCTAProps) {
         <div className="reveal mt-10 flex flex-col sm:flex-row gap-4 justify-center">
           <a
             href="#investimento"
-            onClick={() => posthog.capture("cta_click", { location: "final_cta" })}
+            onClick={() => {
+              posthog.capture("cta_click", { location: "final_cta" });
+              if (typeof window !== "undefined" && window.fbq) {
+                const leadEventId = generateEventId();
+                setStoredEventId("lead_investimento", leadEventId);
+                try {
+                  sessionStorage.setItem("lead_investimento_event_id", leadEventId);
+                } catch {
+                  // non-fatal
+                }
+                window.fbq(
+                  "track",
+                  "Lead",
+                  {
+                    content_name: `${PRODUCT_NAME} - intent to buy`,
+                    value: PRODUCT_PRICE,
+                    currency: "BRL",
+                  },
+                  { eventID: leadEventId }
+                );
+              }
+            }}
             className={cn(
               buttonVariants({ size: "lg" }),
               "rounded-full bg-mapa-accent hover:bg-mapa-accent-md text-white font-medium px-10 h-14 text-lg transition-colors duration-300 no-underline"

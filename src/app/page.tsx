@@ -17,6 +17,7 @@ import { About } from "@/components/about";
 import { FinalCTA } from "@/components/final-cta";
 import { Footer } from "@/components/footer";
 import { FloatingWhatsApp } from "@/components/floating-whatsapp";
+import { ViewContentTracker } from "@/components/view-content-tracker";
 import { getVagasRestantes } from "@/lib/edge-config";
 
 export default async function Home() {
@@ -30,6 +31,7 @@ export default async function Home() {
       <div className="floating-particle" aria-hidden="true" />
       <div className="floating-particle" aria-hidden="true" />
 
+      <ViewContentTracker />
       <Nav />
       <FloatingWhatsApp />
       <main>
