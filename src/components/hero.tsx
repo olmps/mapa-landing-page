@@ -93,6 +93,14 @@ export function Hero() {
                   },
                   { eventID: leadEventId }
                 );
+                // Mirror to CAPI server-side for dedup — fire-and-forget
+                fetch("/api/events/lead", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ eventID: leadEventId, source: "investimento" }),
+                }).catch(() => {
+                  // Non-fatal
+                });
               }
             }}
             className={cn(
@@ -111,6 +119,14 @@ export function Hero() {
               if (typeof window !== "undefined" && window.fbq) {
                 const leadEventId = generateEventId();
                 window.fbq("track", "Lead", {}, { eventID: leadEventId });
+                // Mirror to CAPI server-side for dedup — fire-and-forget
+                fetch("/api/events/lead", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ eventID: leadEventId, source: "whatsapp" }),
+                }).catch(() => {
+                  // Non-fatal
+                });
               }
             }}
             className={cn(
