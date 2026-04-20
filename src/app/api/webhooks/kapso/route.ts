@@ -41,10 +41,13 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json();
-    const events = normalizeWebhookPayload(body);
+    const webhookEvent = request.headers.get("x-webhook-event") ?? undefined;
+    const events = normalizeWebhookPayload(body, { webhookEvent });
 
     if (events.length === 0) {
-      console.warn("[Kapso Webhook] No recognizable events in payload");
+      console.warn("[Kapso Webhook] No recognizable events in payload", {
+        webhookEvent,
+      });
       return NextResponse.json({ received: true, recognized: 0 }, { status: 200 });
     }
 

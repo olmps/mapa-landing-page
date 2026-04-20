@@ -283,7 +283,92 @@ function normalizeForwardedMetaWebhook(payload: Record<string, unknown>): TruthE
   return events;
 }
 
-export function normalizeWebhookPayload(payload: unknown): TruthEvent[] {
+function normalizeKapsoV2Webhook(
+  payload: Record<string, unknown>,
+  webhookEvent: string | undefined
+): TruthEvent[] {
+  if (!webhookEvent) return [];
+
+  const message = isRecord(payload.message) ? payload.message : null;
+  const conversation = isRecord(payload.conversation) ? payload.conversation : null;
+  const conversationId = asString(conversation?.id);
+  const phoneNumber = asString(conversation?.phone_number);
+  const businessScopedUserId = asString(conversation?.business_scoped_user_id);
+  const contactKey = getContactKey({ businessScopedUserId, phoneNumber, conversationId });
+
+  if (!contactKey) return [];
+
+  if (webhookEvent === "whatsapp.conversation.created") {
+    const occurredAt =
+      asString(conversation?.created_at) ??
+      asString(conversation?.updated_at) ??
+      new Date().toISOString();
+    return [
+      {
+        kind: "conversation_created",
+        eventKey: `kapso:conversation_created:${conversationId ?? contactKey}`,
+        occurredAt,
+        contactKey,
+        phoneNumber,
+        businessScopedUserId,
+        conversationId,
+      },
+    ];
+  }
+
+  if (webhookEvent === "whatsapp.message.received") {
+    const messageId = asString(message?.id);
+    if (!messageId) return [];
+    const occurredAt = toIsoFromUnixSeconds(asString(message?.timestamp));
+    return [
+      {
+        kind: "customer_message",
+        eventKey: `kapso:message_received:${messageId}`,
+        occurredAt,
+        contactKey,
+        phoneNumber,
+        businessScopedUserId,
+        conversationId,
+        messageId,
+      },
+    ];
+  }
+
+  if (
+    [
+      "whatsapp.message.sent",
+      "whatsapp.message.delivered",
+      "whatsapp.message.read",
+      "whatsapp.message.failed",
+    ].includes(webhookEvent)
+  ) {
+    const rawStatus = webhookEvent.replace("whatsapp.message.", "") as OutboundStatus;
+    const messageId = asString(message?.id);
+    if (!messageId) return [];
+    const occurredAt =
+      toIsoFromUnixSeconds(asString(message?.timestamp)) ?? new Date().toISOString();
+    return [
+      {
+        kind: "outbound_status",
+        eventKey: `kapso:status:${messageId}:${rawStatus}`,
+        occurredAt,
+        contactKey,
+        phoneNumber,
+        businessScopedUserId,
+        conversationId,
+        messageId,
+        status: rawStatus,
+      },
+    ];
+  }
+
+  return [];
+}
+
+export function normalizeWebhookPayload(
+  payload: unknown,
+  context?: { webhookEvent?: string }
+): TruthEvent[] {
   if (!isRecord(payload)) return [];
   if (asString(payload.event)) {
     return normalizeKapsoStructuredWebhook(payload);
@@ -291,7 +376,7 @@ export function normalizeWebhookPayload(payload: unknown): TruthEvent[] {
   if (payload.object === "whatsapp_business_account") {
     return normalizeForwardedMetaWebhook(payload);
   }
-  return [];
+  return normalizeKapsoV2Webhook(payload, context?.webhookEvent);
 }
 
 export function applyTruthEvents(

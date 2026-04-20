@@ -205,3 +205,45 @@ test("mixed Kapso and forwarded Meta payloads for the same contact merge into on
   assert.equal(Object.keys(store.conversations).length, 1);
   assert.equal(store.conversations["5511888888888"]?.conversationId, "conv_merged");
 });
+
+test("normalizeWebhookPayload parses real Kapso v2 webhook using X-Webhook-Event semantics", () => {
+  const payload = {
+    message: {
+      id: "wamid.real.1",
+      timestamp: "1730092800",
+      type: "text",
+      from: "5511999999999",
+      from_user_id: "BR.12345",
+      text: { body: "Olá" },
+      kapso: {
+        direction: "inbound",
+        status: "received",
+        processing_status: "pending",
+        origin: "cloud_api",
+        has_media: false,
+        content: "Olá",
+      },
+    },
+    conversation: {
+      id: "conv_real_1",
+      phone_number: "5511999999999",
+      business_scoped_user_id: "BR.12345",
+      status: "active",
+      created_at: "2025-10-28T13:40:00Z",
+      updated_at: "2025-10-28T14:25:01Z",
+      phone_number_id: "123456789012345",
+    },
+    is_new_conversation: true,
+    phone_number_id: "123456789012345",
+  };
+
+  const events = normalizeWebhookPayload(payload, {
+    webhookEvent: "whatsapp.message.received",
+  });
+
+  assert.equal(events.length, 1);
+  assert.equal(events[0]?.kind, "customer_message");
+  assert.equal(events[0]?.contactKey, "5511999999999");
+  assert.equal(events[0]?.conversationId, "conv_real_1");
+  assert.equal(events[0]?.messageId, "wamid.real.1");
+});
