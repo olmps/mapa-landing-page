@@ -8,6 +8,7 @@ import { WHATSAPP_URL, PAYMENT_URL, PRODUCT_PRICE, PIX_PRICE } from "@/lib/const
 import { WhatsAppIcon } from "@/components/icons/whatsapp";
 import { VAGAS_TOTAL } from "@/lib/edge-config";
 import { posthog } from "@/lib/posthog";
+import { trackIntent } from "@/lib/intent-tracking";
 
 const installmentValue = Math.ceil((PRODUCT_PRICE / 12) * 100) / 100;
 // Formata sem toLocaleString para evitar hydration mismatch
@@ -208,7 +209,9 @@ export function Pricing({ vagasRestantes = VAGAS_TOTAL }: PricingProps) {
                       href={WHATSAPP_URL}
                       target="_blank"
                       rel="noopener noreferrer"
-                      onClick={() => posthog.capture("whatsapp_click", { location: "pricing_waitlist" })}
+                      onClick={() => {
+                        void trackIntent({ source: "whatsapp", location: "pricing_waitlist" });
+                      }}
                       className={cn(
                         buttonVariants({ size: "lg" }),
                         "w-full rounded-full bg-mapa-accent hover:bg-mapa-accent-md text-white font-medium h-12 text-base transition-colors duration-300 no-underline"
@@ -247,7 +250,9 @@ export function Pricing({ vagasRestantes = VAGAS_TOTAL }: PricingProps) {
                       href={WHATSAPP_URL}
                       target="_blank"
                       rel="noopener noreferrer"
-                      onClick={() => posthog.capture("whatsapp_click", { location: "pricing" })}
+                      onClick={() => {
+                        void trackIntent({ source: "whatsapp", location: "pricing" });
+                      }}
                       className={cn(
                         buttonVariants({ variant: "ghost", size: "lg" }),
                         "w-full rounded-full text-mapa-text-secondary hover:text-mapa-text font-medium h-11 text-sm transition-all duration-300 no-underline mt-2"

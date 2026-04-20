@@ -4,11 +4,10 @@ import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { WHATSAPP_URL, PRODUCT_NAME, PRODUCT_PRICE } from "@/lib/constants";
+import { WHATSAPP_URL } from "@/lib/constants";
 import { WhatsAppIcon } from "@/components/icons/whatsapp";
 import { HumanBadge } from "@/components/human-badge";
-import { posthog } from "@/lib/posthog";
-import { generateEventId, setStoredEventId } from "@/lib/event-id";
+import { trackIntent } from "@/lib/intent-tracking";
 
 const tools = [
   "Claude",
@@ -74,34 +73,7 @@ export function Hero() {
           <a
             href="#investimento"
             onClick={() => {
-              posthog.capture("cta_click", { location: "hero" });
-              if (typeof window !== "undefined" && window.fbq) {
-                const leadEventId = generateEventId();
-                setStoredEventId("lead_investimento", leadEventId);
-                try {
-                  sessionStorage.setItem("lead_investimento_event_id", leadEventId);
-                } catch {
-                  // non-fatal
-                }
-                window.fbq(
-                  "track",
-                  "Lead",
-                  {
-                    content_name: `${PRODUCT_NAME} - intent to buy`,
-                    value: PRODUCT_PRICE,
-                    currency: "BRL",
-                  },
-                  { eventID: leadEventId }
-                );
-                // Mirror to CAPI server-side for dedup — fire-and-forget
-                fetch("/api/events/lead", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ eventID: leadEventId, source: "investimento" }),
-                }).catch(() => {
-                  // Non-fatal
-                });
-              }
+              void trackIntent({ source: "investimento", location: "hero" });
             }}
             className={cn(
               buttonVariants({ size: "lg" }),
@@ -115,19 +87,7 @@ export function Hero() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => {
-              posthog.capture("whatsapp_click", { location: "hero" });
-              if (typeof window !== "undefined" && window.fbq) {
-                const leadEventId = generateEventId();
-                window.fbq("track", "Lead", {}, { eventID: leadEventId });
-                // Mirror to CAPI server-side for dedup — fire-and-forget
-                fetch("/api/events/lead", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ eventID: leadEventId, source: "whatsapp" }),
-                }).catch(() => {
-                  // Non-fatal
-                });
-              }
+              void trackIntent({ source: "whatsapp", location: "hero" });
             }}
             className={cn(
               buttonVariants({ variant: "outline", size: "lg" }),

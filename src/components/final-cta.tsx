@@ -6,9 +6,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { WHATSAPP_URL } from "@/lib/constants";
 import { WhatsAppIcon } from "@/components/icons/whatsapp";
 import { VAGAS_TOTAL } from "@/lib/edge-config";
-import { PRODUCT_NAME, PRODUCT_PRICE } from "@/lib/constants";
-import { posthog } from "@/lib/posthog";
-import { generateEventId, setStoredEventId } from "@/lib/event-id";
+import { trackIntent } from "@/lib/intent-tracking";
 
 interface FinalCTAProps {
   vagasRestantes?: number;
@@ -31,34 +29,7 @@ export function FinalCTA({ vagasRestantes = VAGAS_TOTAL }: FinalCTAProps) {
           <a
             href="#investimento"
             onClick={() => {
-              posthog.capture("cta_click", { location: "final_cta" });
-              if (typeof window !== "undefined" && window.fbq) {
-                const leadEventId = generateEventId();
-                setStoredEventId("lead_investimento", leadEventId);
-                try {
-                  sessionStorage.setItem("lead_investimento_event_id", leadEventId);
-                } catch {
-                  // non-fatal
-                }
-                window.fbq(
-                  "track",
-                  "Lead",
-                  {
-                    content_name: `${PRODUCT_NAME} - intent to buy`,
-                    value: PRODUCT_PRICE,
-                    currency: "BRL",
-                  },
-                  { eventID: leadEventId }
-                );
-                // Mirror to CAPI server-side for dedup — fire-and-forget
-                fetch("/api/events/lead", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ eventID: leadEventId, source: "investimento" }),
-                }).catch(() => {
-                  // Non-fatal
-                });
-              }
+              void trackIntent({ source: "investimento", location: "final_cta" });
             }}
             className={cn(
               buttonVariants({ size: "lg" }),
@@ -72,19 +43,7 @@ export function FinalCTA({ vagasRestantes = VAGAS_TOTAL }: FinalCTAProps) {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => {
-              posthog.capture("whatsapp_click", { location: "final_cta" });
-              if (typeof window !== "undefined" && window.fbq) {
-                const leadEventId = generateEventId();
-                window.fbq("track", "Lead", {}, { eventID: leadEventId });
-                // Mirror to CAPI server-side for dedup — fire-and-forget
-                fetch("/api/events/lead", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ eventID: leadEventId, source: "whatsapp" }),
-                }).catch(() => {
-                  // Non-fatal
-                });
-              }
+              void trackIntent({ source: "whatsapp", location: "final_cta" });
             }}
             className={cn(
               buttonVariants({ variant: "outline", size: "lg" }),

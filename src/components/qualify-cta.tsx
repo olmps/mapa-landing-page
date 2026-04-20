@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { WHATSAPP_URL } from "@/lib/constants";
 import { WhatsAppIcon } from "@/components/icons/whatsapp";
-import { generateEventId } from "@/lib/event-id";
+import { trackIntent } from "@/lib/intent-tracking";
 
 export function QualifyCTA() {
   const ref = useScrollReveal();
@@ -61,18 +61,7 @@ export function QualifyCTA() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => {
-                  if (typeof window !== "undefined" && window.fbq) {
-                    const leadEventId = generateEventId();
-                    window.fbq("track", "Lead", {}, { eventID: leadEventId });
-                    // Mirror to CAPI server-side for dedup — fire-and-forget
-                    fetch("/api/events/lead", {
-                      method: "POST",
-                      headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify({ eventID: leadEventId, source: "whatsapp" }),
-                    }).catch(() => {
-                      // Non-fatal
-                    });
-                  }
+                  void trackIntent({ source: "whatsapp", location: "qualify_cta" });
                 }}
                 className={cn(
                   buttonVariants({ size: "lg" }),

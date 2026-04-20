@@ -1,5 +1,8 @@
+"use client";
+
 import { Separator } from "@/components/ui/separator";
 import { WHATSAPP_URL } from "@/lib/constants";
+import { trackIntent } from "@/lib/intent-tracking";
 
 export function Footer() {
   return (
@@ -34,6 +37,9 @@ export function Footer() {
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => {
+                void trackIntent({ source: "whatsapp", location: "footer" });
+              }}
               className="text-mapa-text-hint hover:text-mapa-text-secondary text-xs transition-colors duration-300"
             >
               WhatsApp
